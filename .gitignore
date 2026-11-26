@@ -15,3 +15,15 @@
 # 系统
 Thumbs.db
 desktop.ini
+
+# 本地工作区记忆与复习笔记（不属于作业提交内容）
+.workbuddy/
+Homework_lesson01/go-test-notes.md
+
+# go build 生成的无扩展名可执行文件
+# 上面的 *.exe / *.test / *.out 匹配不到它们，需要逐条列出；以后新产物再补一行
+Homework_lesson01/LV1/LV1
+Homework_lesson01/LV2/LV2
+Homework_lesson01/LV0_13/LV0_13
+Homework_lesson01/LV0_14/LV0_14
+Homework_lesson02/LV0/Source01/Source01

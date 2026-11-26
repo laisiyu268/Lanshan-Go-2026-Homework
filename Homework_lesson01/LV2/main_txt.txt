@@ -1,0 +1,86 @@
+package main
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
+
+func CalcFactory(operate string) func(float64, float64) float64 {
+	switch operate {
+	case "+":
+		return func(a, b float64) float64 {
+			return a + b
+		}
+	case "-":
+		return func(a, b float64) float64 {
+			return a - b
+		}
+	case "*":
+		return func(a, b float64) float64 {
+			return a * b
+		}
+	case "/":
+		return func(a, b float64) float64 {
+			if b != 0 {
+				return a / b
+			}
+			return 0
+		}
+	default:
+		return nil
+	}
+}
+func re() (float64, float64, string) {
+	/*
+		var x, y float64
+		var expr, op string
+		fmt.Scan(&x, &expr)
+
+		// fmt.Print(x, ",", expr, "\n")
+		for i, ch := range expr {
+			// fmt.Println(i, " , ", string(ch))
+			if ch == '+' || ch == '-' || ch == '*' || ch == '/' {
+				op += string(expr[i])
+			} else if ch >= '0' && ch <= '9' {
+				y = (y << 3) + (y << 1) + float64(ch^48)
+			} else {
+				continue
+			}
+		}
+		return x, y, op
+	*/
+	var str string
+	fmt.Scanln(str)
+	ops := []string{"+", "-", "*", "/"}
+	op := ""
+	var x, y float64
+	idx := -1
+	for _, ch := range ops {
+		i := strings.Index(str, ch)
+		if i > 0 {
+			op = ch
+			idx = i
+			break
+		}
+	}
+	if idx == -1 {
+		fmt.Println("未找到运算符")
+		return 0, 0, ""
+	}
+	x, err1 := strconv.ParseFloat(str[:idx], 64)
+	y, err2 := strconv.ParseFloat(str[idx+1:], 64)
+	if err1 != nil || err2 != nil {
+		fmt.Println("数字格式不正确")
+		return 0, 0, ""
+	}
+	return x, y, op
+}
+func main() {
+	fmt.Println("请输入含两个数的四则运算表达式: ")
+	x, y, op := re()
+	// fmt.Println(x, y, op)
+	calc := CalcFactory(op)
+	var ans float64 = calc(x, y)
+	fmt.Printf("%d %s %d = %d\n", x, op, y, ans)
+}
